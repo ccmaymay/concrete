@@ -84,9 +84,9 @@ service AnnotateWithContextService extends services.Service {
  * significantly higher throughput on batches of Communications than on
  * single communications.
  */
-service AnnotateCommunicationBatchService {
+service AnnotateCommunicationBatchService extends AnnotateCommunicationService {
   /**
-   * Main annotation method. Takes a batch of Communication objects as
+   * Batch annotation method. Takes a batch of Communication objects as
    * input and returns a batch of corresponding new Communications as
    * output.
    *
@@ -96,26 +96,5 @@ service AnnotateCommunicationBatchService {
    * Can throw a ConcreteThriftException upon error
    * (invalid input, analytic exception, etc.).
    */
-  list<communication.Communication> annotate(1: list<communication.Communication> originals) throws (1: ex.ConcreteThriftException ex)
-
-  /**
-   * Return the tool's AnnotationMetadata.
-   */
-  metadata.AnnotationMetadata getMetadata()
-
-  /**
-   * Return a detailed description of what the particular tool
-   * does, what inputs and outputs to expect, batch size limitations
-   * and recommendations, etc.
-   *
-   * Developers whom are not familiar with the particular
-   * analytic should be able to read this string and
-   * understand the essential functions of the analytic.
-   */
-  string getDocumentation()
-
-  /**
-   * Indicate to the server it should shut down.
-   */
-  oneway void shutdown()
+  list<communication.Communication> annotateBatch(1: list<communication.Communication> originals) throws (1: ex.ConcreteThriftException ex)
 }
